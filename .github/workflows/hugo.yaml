@@ -38,7 +38,7 @@ jobs:
         run: hugo --minify --baseURL https://joshuarlowry.github.io/3DPrintingAdventures/
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
