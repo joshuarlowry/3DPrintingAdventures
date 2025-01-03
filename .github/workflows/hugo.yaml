@@ -1,7 +1,10 @@
 name: Deploy Hugo site to Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Build and Test Hugo site"]
+    types:
+      - completed
     branches: ["main"]
   workflow_dispatch:
 
@@ -20,20 +23,8 @@ defaults:
     shell: bash
 
 jobs:
-  # Wait for the build-and-test workflow to complete
-  wait-for-build-and-test:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Wait for build and test
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'Build and Test Hugo site'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
   build:
-    needs: wait-for-build-and-test
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
