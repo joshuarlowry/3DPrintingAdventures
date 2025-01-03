@@ -15,4 +15,4 @@ This site documents my experiences with 3D printing, from basic prints to comple
 
 ## Resources
 
-This site also includes a [collection of resources](/resources) that I've found useful in my 3D printing journey.
+This site also includes a [collection of resources](resources) that I've found useful in my 3D printing journey.
