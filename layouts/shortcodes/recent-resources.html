@@ -1,0 +1,8 @@
+{{ $pages := .Page.Pages.ByDate.Reverse }}
+<div class="book-posts">
+  {{ range $pages }}
+    <div class="book-post">
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a> - {{ .Date.Format "2006-01-02" }}
+    </div>
+  {{ end }}
+</div> 
