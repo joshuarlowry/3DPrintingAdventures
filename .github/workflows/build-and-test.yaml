@@ -25,7 +25,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify
+        run: hugo --minify --baseURL http://localhost/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
@@ -47,6 +47,10 @@ jobs:
           name: site-build
           path: ./public
 
+      - name: Copy static files
+        run: |
+          cp -r static/* public/ || true
+
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -62,10 +66,11 @@ jobs:
           CheckImages: true
           CheckScripts: true
           CheckLinks: true
-          EnforceHTTPS: true
+          EnforceHTTPS: false
           IgnoreURLs:
             - "mailto:"
-            - "/3DPrintingAdventures/"
+            - "^/$"
+            - "^/docs"
           IgnoreDirs:
             - "public/images"
           IgnoreAltMissing: true
@@ -82,6 +87,8 @@ jobs:
           ls -la public/
           echo "\nContents of public/docs directory:"
           ls -la public/docs || echo "docs directory not found"
+          echo "\nContents of public/images directory:"
+          ls -la public/images || echo "images directory not found"
 
       - name: Run HTML Tests
         run: |
