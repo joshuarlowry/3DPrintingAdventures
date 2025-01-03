@@ -5,21 +5,35 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+# Add workflow dependency
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 defaults:
   run:
     shell: bash
 
 jobs:
+  # Wait for the build-and-test workflow to complete
+  wait-for-build-and-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Wait for build and test
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'test'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
   build:
+    needs: wait-for-build-and-test
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
