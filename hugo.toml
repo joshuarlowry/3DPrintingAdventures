@@ -1,4 +1,4 @@
-baseURL = '/'  # This will work for both local and GitHub Pages
+baseURL = 'https://joshuarlowry.github.io/3DPrintingAdventures/'  # This will work for both local and GitHub Pages
 languageCode = 'en-us'
 title = '3D Printing Adventures'
 theme = 'hugo-book'
