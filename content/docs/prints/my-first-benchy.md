@@ -39,10 +39,10 @@ This being my first print, it showed that the printer was well-calibrated out of
 
 ## Gallery
 
-![Printing 1](/images/prints/my-first-benchy/CF6C29E4-7922-4567-A80D-F1FEB9BB6E0D_1_102_o.jpeg)
+![Printing 1](images/prints/my-first-benchy/CF6C29E4-7922-4567-A80D-F1FEB9BB6E0D_1_102_o.jpeg)
 
-![Printing 2](/images/prints/my-first-benchy/7AC56836-7B5A-4955-9883-7A0D69D6F867_1_102_o.jpeg)
+![Printing 2](images/prints/my-first-benchy/7AC56836-7B5A-4955-9883-7A0D69D6F867_1_102_o.jpeg)
 
-![Printing 3](/images/prints/my-first-benchy/7E6773B3-4EFC-4802-BE16-9079747350C6_1_105_c.jpeg)
+![Printing 3](images/prints/my-first-benchy/7E6773B3-4EFC-4802-BE16-9079747350C6_1_105_c.jpeg)
 
-![Complete](/images/prints/my-first-benchy/B19B5DBC-F600-4C94-B4CC-272AAF4061AE_1_105_c.jpeg)
+![Complete](images/prints/my-first-benchy/B19B5DBC-F600-4C94-B4CC-272AAF4061AE_1_105_c.jpeg)
