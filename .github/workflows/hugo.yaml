@@ -42,9 +42,13 @@ jobs:
       - name: Build
         run: hugo --minify --baseURL https://joshuarlowry.github.io/3DPrintingAdventures/
 
-      - name: Run HTML Tests
+      - name: Install and Run HTML Tests
         run: |
+          mkdir -p /tmp/htmltest
+          cd /tmp/htmltest
+          go mod init htmltest
           go install github.com/wjdp/htmltest@latest
+          cd $GITHUB_WORKSPACE
           $(go env GOPATH)/bin/htmltest -c .htmltest.yml
         
       - name: Upload artifact
