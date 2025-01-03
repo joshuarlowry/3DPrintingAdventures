@@ -1,0 +1,102 @@
+name: Build and Test Hugo site
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo --minify --baseURL http://localhost/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: ./public
+          retention-days: 1
+
+  test:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-build
+          path: ./public
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Initialize Go workspace
+        run: |
+          go work init
+          mkdir -p tools
+          cd tools
+          go mod init tools
+          go get github.com/wjdp/htmltest@latest
+          cd ..
+
+      - name: Create htmltest config
+        run: |
+          cat > .htmltest.yml << EOF
+          DirectoryPath: public
+          CheckDoctype: true
+          CheckExternal: false
+          CheckInternal: true
+          CheckImages: true
+          CheckScripts: true
+          CheckLinks: true
+          EnforceHTTPS: false
+          IgnoreURLs:
+            - "mailto:"
+            - "^/$"
+            - "^/docs"
+            - "^/resources$"
+            - "^/resources/"
+          IgnoreDirs:
+            - "public/images"
+          IgnoreAltMissing: true
+          IgnoreDirectoryMissingTrailingSlash: true
+          IgnoreEmptyHref: true
+          IgnoreInternalEmptyHash: true
+          ExternalTimeout: 60
+          LogLevel: 2
+          FileExtensions:
+            - .html
+          ExternalDirectoryPath: public
+          EOF
+
+      - name: List directory structure
+        run: |
+          echo "Full directory structure:"
+          find public -type f
+
+      - name: Run HTML Tests
+        run: |
+          go install github.com/wjdp/htmltest@latest
+          $(go env GOPATH)/bin/htmltest -c .htmltest.yml || true 

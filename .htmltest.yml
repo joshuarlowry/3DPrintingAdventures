@@ -1,0 +1,14 @@
+DirectoryPath: public
+CheckDoctype: true
+CheckExternal: false
+CheckInternal: true
+CheckImages: true
+CheckScripts: true
+CheckLinks: true
+EnforceHTTPS: true
+IgnoreURLs:
+  - "mailto:"
+IgnoreDirs:
+  - "public/images"
+ExternalTimeout: 60
+LogLevel: 2 
