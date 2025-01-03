@@ -47,9 +47,10 @@ jobs:
           name: site-build
           path: ./public
 
-      - name: Copy static files
+      - name: Setup image directories
         run: |
-          cp -r static/* public/ || true
+          mkdir -p public/images/prints/my-first-benchy
+          cp -r static/images/prints/my-first-benchy/* public/images/prints/my-first-benchy/ || true
 
       - name: Setup Go
         uses: actions/setup-go@v4
@@ -81,14 +82,10 @@ jobs:
           LogLevel: 2
           EOF
 
-      - name: List files in public
+      - name: List directory structure
         run: |
-          echo "Contents of public directory:"
-          ls -la public/
-          echo "\nContents of public/docs directory:"
-          ls -la public/docs || echo "docs directory not found"
-          echo "\nContents of public/images directory:"
-          ls -la public/images || echo "images directory not found"
+          echo "Full directory structure:"
+          find public -type f
 
       - name: Run HTML Tests
         run: |
