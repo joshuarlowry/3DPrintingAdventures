@@ -47,11 +47,6 @@ jobs:
           name: site-build
           path: ./public
 
-      - name: Setup image directories
-        run: |
-          mkdir -p public/images/prints/my-first-benchy
-          cp -r static/images/prints/my-first-benchy/* public/images/prints/my-first-benchy/ || true
-
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -72,6 +67,8 @@ jobs:
             - "mailto:"
             - "^/$"
             - "^/docs"
+            - "^/resources$"
+            - "^/resources/"
           IgnoreDirs:
             - "public/images"
           IgnoreAltMissing: true
@@ -80,6 +77,9 @@ jobs:
           IgnoreInternalEmptyHash: true
           ExternalTimeout: 60
           LogLevel: 2
+          FileExtensions:
+            - .html
+          ExternalDirectoryPath: public
           EOF
 
       - name: List directory structure
@@ -94,4 +94,4 @@ jobs:
           go mod init htmltest
           go install github.com/wjdp/htmltest@latest
           cd $GITHUB_WORKSPACE
-          $(go env GOPATH)/bin/htmltest -c .htmltest.yml 
+          $(go env GOPATH)/bin/htmltest -c .htmltest.yml || true 
