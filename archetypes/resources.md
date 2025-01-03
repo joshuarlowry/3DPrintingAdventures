@@ -8,6 +8,8 @@ link: ""
 tags: []
 ---
 
+{{< resource-link >}}
+
 ## Overview
 
 ## Why It's Useful
