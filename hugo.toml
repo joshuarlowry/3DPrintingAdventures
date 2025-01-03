@@ -1,4 +1,4 @@
-baseURL = 'https://joshuarlowry.github.io/3DPrintingAdventures/'  # Replace with your GitHub username
+baseURL = '/'  # This will work for both local and GitHub Pages
 languageCode = 'en-us'
 title = '3D Printing Adventures'
 theme = 'hugo-book'
@@ -11,5 +11,5 @@ enableGitInfo = true
   BookToC = true
   BookSection = 'docs'
   BookSearch = true
-  BookFavicon = "/favicon/3d-printer-svgrepo-com.png"
+  BookFavicon = "favicon/3d-printer-svgrepo-com.png"
   BookHomePageURL = "/docs/getting-started/" 
