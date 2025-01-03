@@ -1,0 +1,2 @@
+{{ $src := .Get "src" }}
+<img src="{{ .Site.BaseURL }}{{ strings.TrimPrefix "/" $src }}" {{ with .Get "alt" }}alt="{{ . }}"{{ end }}> 
