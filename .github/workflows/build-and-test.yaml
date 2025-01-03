@@ -25,7 +25,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify
+        run: hugo --minify --baseURL https://joshuarlowry.github.io/3DPrintingAdventures/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
@@ -51,6 +51,29 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.21'
+
+      - name: Create htmltest config
+        run: |
+          cat > .htmltest.yml << EOF
+          DirectoryPath: public
+          CheckDoctype: true
+          CheckExternal: false
+          CheckInternal: true
+          CheckImages: true
+          CheckScripts: true
+          CheckLinks: true
+          EnforceHTTPS: true
+          IgnoreURLs:
+            - "mailto:"
+          IgnoreDirs:
+            - "public/images"
+          IgnoreAltMissing: true
+          IgnoreDirectoryMissingTrailingSlash: true
+          IgnoreEmptyHref: true
+          IgnoreInternalEmptyHash: true
+          ExternalTimeout: 60
+          LogLevel: 2
+          EOF
 
       - name: Run HTML Tests
         run: |
