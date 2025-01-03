@@ -25,7 +25,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify --baseURL https://joshuarlowry.github.io/3DPrintingAdventures/
+        run: hugo --minify
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
@@ -65,6 +65,7 @@ jobs:
           EnforceHTTPS: true
           IgnoreURLs:
             - "mailto:"
+            - "/3DPrintingAdventures/"
           IgnoreDirs:
             - "public/images"
           IgnoreAltMissing: true
@@ -74,6 +75,13 @@ jobs:
           ExternalTimeout: 60
           LogLevel: 2
           EOF
+
+      - name: List files in public
+        run: |
+          echo "Contents of public directory:"
+          ls -la public/
+          echo "\nContents of public/docs directory:"
+          ls -la public/docs || echo "docs directory not found"
 
       - name: Run HTML Tests
         run: |
