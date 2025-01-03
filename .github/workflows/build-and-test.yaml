@@ -52,6 +52,15 @@ jobs:
         with:
           go-version: '1.21'
 
+      - name: Initialize Go workspace
+        run: |
+          go work init
+          mkdir -p tools
+          cd tools
+          go mod init tools
+          go get github.com/wjdp/htmltest@latest
+          cd ..
+
       - name: Create htmltest config
         run: |
           cat > .htmltest.yml << EOF
@@ -89,9 +98,5 @@ jobs:
 
       - name: Run HTML Tests
         run: |
-          mkdir -p /tmp/htmltest
-          cd /tmp/htmltest
-          go mod init htmltest
           go install github.com/wjdp/htmltest@latest
-          cd $GITHUB_WORKSPACE
           $(go env GOPATH)/bin/htmltest -c .htmltest.yml || true 
