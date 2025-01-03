@@ -43,12 +43,38 @@ jobs:
           name: github-pages
           path: ./public
 
+  test:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: ./public
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Install htmltest
+        run: |
+          go install github.com/wjdp/htmltest@latest
+          
+      - name: Run htmltest
+        run: |
+          htmltest -c .htmltest.yml
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-24.04
-    needs: build
+    needs: [build, test]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
