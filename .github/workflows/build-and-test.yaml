@@ -1,0 +1,62 @@
+name: Build and Test Hugo site
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: site-build
+          path: ./public
+          retention-days: 1
+
+  test:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: site-build
+          path: ./public
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Run HTML Tests
+        run: |
+          mkdir -p /tmp/htmltest
+          cd /tmp/htmltest
+          go mod init htmltest
+          go install github.com/wjdp/htmltest@latest
+          cd $GITHUB_WORKSPACE
+          $(go env GOPATH)/bin/htmltest -c .htmltest.yml 

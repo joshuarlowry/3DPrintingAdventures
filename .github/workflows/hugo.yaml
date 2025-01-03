@@ -34,23 +34,9 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
-
       - name: Build
         run: hugo --minify --baseURL https://joshuarlowry.github.io/3DPrintingAdventures/
 
-      - name: Install and Run HTML Tests
-        run: |
-          mkdir -p /tmp/htmltest
-          cd /tmp/htmltest
-          go mod init htmltest
-          go install github.com/wjdp/htmltest@latest
-          cd $GITHUB_WORKSPACE
-          $(go env GOPATH)/bin/htmltest -c .htmltest.yml
-        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
