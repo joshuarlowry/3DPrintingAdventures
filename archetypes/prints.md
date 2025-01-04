@@ -6,6 +6,8 @@ weight: 1
 draft: true
 # Print Settings
 printer: ""  # Your 3D printer model
+gcode_file: ""  # Path to the GCode file relative to static/gcode/
+slicer: ""      # Slicer used (e.g., PrusaSlicer, Cura, etc.)
 filament: 
   type: ""   # PLA, PETG, ABS, etc.
   brand: ""  # Manufacturer

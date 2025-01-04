@@ -1,0 +1,15 @@
+{{ $gcode := .Page.Params.gcode_file }}
+{{ if $gcode }}
+<div class="gcode-info">
+    <p>
+        <strong>Slicer:</strong> {{ .Page.Params.slicer }}<br>
+        <strong>Nozzle Temperature:</strong> {{ .Page.Params.print_settings.nozzle_temp }}°C<br>
+        <strong>Bed Temperature:</strong> {{ .Page.Params.print_settings.bed_temp }}°C<br>
+        <strong>Layer Height:</strong> {{ .Page.Params.print_settings.layer_height }} mm<br>
+        <strong>Infill:</strong> {{ .Page.Params.print_settings.infill }}%<br>
+        <a href="/gcode/{{ $gcode }}" download class="gcode-download">
+            <i class="fas fa-download"></i> Download GCode File
+        </a>
+    </p>
+</div>
+{{ end }} 

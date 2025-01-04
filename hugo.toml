@@ -12,4 +12,14 @@ enableGitInfo = true
   BookSection = 'docs'
   BookSearch = true
   BookFavicon = "favicon/3d-printer-svgrepo-com.png"
-  BookHomePageURL = "/docs/getting-started/" 
+  BookHomePageURL = "/" 
+
+[mediaTypes]
+  [mediaTypes."text/x-gcode"]
+    suffixes = ["gcode"]
+
+[outputFormats]
+  [outputFormats.GCODE]
+    mediaType = "text/x-gcode"
+    isPlainText = true
+    isHTML = false 
